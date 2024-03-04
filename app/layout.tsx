@@ -13,6 +13,7 @@ const IBMPlex = IBM_Plex_Sans({
 export const metadata: Metadata = {
   title: "ThinkAI",
   description: "AI powered image generator",
+  icons:'./favicon.ico'
 };
 
 export default function RootLayout({
