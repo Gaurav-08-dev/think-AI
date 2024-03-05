@@ -1,5 +1,4 @@
 import mongoose, {Mongoose} from "mongoose";
-import { cache } from "react";
 
 const MONGODB_URL = process.env.MONGODB_URL;
 
@@ -25,6 +24,6 @@ export const connectToDatabase = async ()=>{
         dbName:"thinkAI",bufferCommands:false
     })
 
-    return cached.conn
+    return cached.conn;
     
 }
