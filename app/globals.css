@@ -302,7 +302,7 @@
   }
 
   .header-nav_elements {
-    @apply mt-8 flex w-full flex-col items-start gap-5;
+    @apply mt-8 flex w-full flex-col items-start gap-5 h-full overflow-y-scroll;
   }
 
   /* Search Component */
@@ -332,7 +332,7 @@
   }
 
   .sidebar-link {
-    @apply p-16-semibold flex size-full gap-4 p-4 ;
+    @apply p-16-semibold flex size-full gap-4 p-4;
   }
 
   /* TransformationForm Component */
