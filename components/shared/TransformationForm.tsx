@@ -23,6 +23,8 @@ import {
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.actions";
 import MediaUploader from "./MediaUploader";
+import TransformedImage from "./TransformedImage";
+import { getCldImageUrl } from "next-cloudinary";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -69,6 +71,31 @@ const TransformationForm = ({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
+    setIsSubmitting(true);
+
+    if (data || image) {
+      const transformationUrl = getCldImageUrl({
+        width: image?.width,
+        height: image?.height,
+        src: image?.publicId,
+        ...transformationConfig,
+      });
+
+      const imageData = {
+        title: values.title,
+        transformationType: type,
+        publicId: image?.publicId,
+        width: image?.width,
+        height: image?.height,
+        config: transformationConfig,
+        secureUrl: image?.secureUrl,
+        transformationUrl,
+        aspectRatio: values.aspectRatio,
+        promt: values.prompt,
+        color: values.color,
+      };
+    }
   }
 
   function onSelectFieldHandler(
@@ -107,7 +134,7 @@ const TransformationForm = ({
     }, 1000);
   }
 
-  // TODO: Return to update credits
+  // TODO: Return to update credit fee dynamically
   const onTransformHandler = async () => {
     setIsTransforming(true);
     setTransformationConfig(
@@ -115,7 +142,7 @@ const TransformationForm = ({
     );
     setNewTransformation(null);
     startTransition(async () => {
-      // await updateCredits(userId, creditFee);
+      await updateCredits(userId, -1);
     });
   };
 
@@ -220,6 +247,15 @@ const TransformationForm = ({
                 type={type}
               />
             )}
+          />
+
+          <TransformedImage
+            image={image}
+            type={type}
+            title={form.getValues().title}
+            isTransforming={isTransforming}
+            setIsTransforming={setIsTransforming}
+            transformationConfig={transformationConfig}
           />
         </div>
 
