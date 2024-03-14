@@ -30,7 +30,9 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 //* Update Image
 export async function updateImage({ image, userId, path }: UpdateImageParams) {
   try {
+    
     await connectToDatabase();
+    
     const imageToUpdate = await Image.findById(image._id);
 
     if (!imageToUpdate || imageToUpdate.author.toHexString() !== userId) {
