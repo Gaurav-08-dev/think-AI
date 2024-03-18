@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +27,7 @@ import TransformedImage from "./TransformedImage";
 import { getCldImageUrl } from "next-cloudinary";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { useRouter } from "next/navigation";
+import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -73,7 +74,6 @@ const TransformationForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    
     setIsSubmitting(true);
 
     if (data || image) {
@@ -175,7 +175,6 @@ const TransformationForm = ({
     }, 1000);
   }
 
-  // TODO: Return to update credit fee dynamically
   const onTransformHandler = async () => {
     setIsTransforming(true);
     setTransformationConfig(
@@ -183,19 +182,25 @@ const TransformationForm = ({
     );
     setNewTransformation(null);
     startTransition(async () => {
-      await updateCredits(userId, -1);
+      await updateCredits(userId, creditFee);
     });
   };
 
+  useEffect(() => {
+    if (image && (type === "restore" || type === "removeBackground")) {
+      setNewTransformation(transformationType.config);
+    }
+  }, [image, transformationType.config, type]);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
         <CustomField
           name="title"
           control={form.control}
           formLabel="Image Title"
           className="w-full"
-          render={({ field }) => <Input  {...field} className="input-field" />}
+          render={({ field }) => <Input {...field} className="input-field" />}
         />
 
         {type === "fill" && (
