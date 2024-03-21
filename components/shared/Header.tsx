@@ -2,9 +2,9 @@ import React from "react";
 
 interface HeaderProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
-const Header = ({ title, subtitle }: HeaderProps) => {
+const Header = ({ title, subtitle="" }: HeaderProps) => {
   return (
     <>
       <h2 className="h2-bold text-dark-600">{title}</h2>

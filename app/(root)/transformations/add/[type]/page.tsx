@@ -3,7 +3,7 @@ import React from "react";
 import { transformationTypes } from "@/constants";
 import TransformationForm from "@/components/shared/TransformationForm";
 import { auth } from "@clerk/nextjs";
-import { getUserId } from "@/lib/actions/user.actions";
+import { getUserById } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 
 const AddTransformationTypePage = async ({
@@ -12,7 +12,7 @@ const AddTransformationTypePage = async ({
   const { userId } = auth();
   if (!userId) redirect("/sign-in");
   const transformation = transformationTypes[type];
-  const user = await getUserId(userId);
+  const user = await getUserById(userId);
 
   return (
     <>

@@ -170,9 +170,8 @@ const TransformationForm = ({
           [fieldName === "prompt" ? "prompt" : "to"]: value,
         },
       }));
-
-      return onChangeField(value);
-    }, 1000);
+    }, 1000)();
+    return onChangeField(value);
   }
 
   const onTransformHandler = async () => {
@@ -191,6 +190,7 @@ const TransformationForm = ({
       setNewTransformation(transformationType.config);
     }
   }, [image, transformationType.config, type]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -214,6 +214,7 @@ const TransformationForm = ({
                 onValueChange={(value: string) =>
                   onSelectFieldHandler(value, field.onChange)
                 }
+                value={field.value}
               >
                 <SelectTrigger className="select-field">
                   <SelectValue placeholder="Select Size" />

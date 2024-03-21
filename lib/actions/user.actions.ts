@@ -17,7 +17,7 @@ export async function createUser(user: CreateUserParams) {
 
 // * READ
 
-export async function getUserId(userId: string) {
+export async function getUserById(userId: string) {
   try {
     await connectToDatabase();
     const user = await User.findOne({ clerkId: userId });

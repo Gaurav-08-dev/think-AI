@@ -3,8 +3,8 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
+
 export const Search = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
