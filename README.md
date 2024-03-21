@@ -38,6 +38,7 @@ During this project, I've picked up important skills and a better understanding 
 - Implement Dark Mode
 - Implement RazorPay
 - Add More AI Features
+- Implement Loaders for download file, initial app load
 
 ## 🚦 Running the Project
 
